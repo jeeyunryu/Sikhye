@@ -1,6 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:provider/provider.dart';
+
+import 'app_state.dart';
 
 Future<UserCredential> signInWithGoogle() async {
   // Trigger the authentication flow
@@ -31,24 +34,27 @@ class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.purple.shade50,
+        // backgroundColor: Colors.purple.shade50,
         body: Center(
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              // crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const Padding(
-                  padding: EdgeInsets.only(bottom: 118.0),
-                  child: Text('Sikhye', style: TextStyle(fontSize: 35)),
-                ),
-                ElevatedButton(
-                  child: const Text('Google'),
-                  onPressed: () {
-                    signInWithGoogle();
-                    Navigator.pushNamed(context, '/');
-                  },
-                )
-              ]),
-        ));
+      child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          // crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const Padding(
+              padding: EdgeInsets.only(bottom: 118.0),
+              child: Text('Sikhye', style: TextStyle(fontSize: 35)),
+            ),
+            Consumer<ApplicationState>(builder: (context, appState, _) {
+              return ElevatedButton(
+                child: const Text('Google'),
+                onPressed: () async {
+                  await signInWithGoogle();
+                  appState.init();
+                  Navigator.pushNamed(context, '/');
+                },
+              );
+            })
+          ]),
+    ));
   }
 }
