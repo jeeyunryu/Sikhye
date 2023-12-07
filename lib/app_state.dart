@@ -24,10 +24,18 @@ class Product {
 //   Folder(this.name);
 // }
 
+class Event {
+  String keyword;
+  DateTime date;
+
+  Event({required this.keyword, required this.date});
+}
+
 class ApplicationState extends ChangeNotifier {
   List<Product> products = [];
   List<Product> likes = [];
   List<String> folders = [];
+  List<Event> events = [];
 
   ApplicationState() {
     init();
@@ -49,6 +57,16 @@ class ApplicationState extends ChangeNotifier {
       'productId': rowFromJson.pRDLSTREPORTNO,
       'uid': FirebaseAuth.instance.currentUser!.uid,
     });
+  }
+
+  void addSearches(DateTime date, String text) {
+    if (FirebaseAuth.instance.currentUser != null) {
+      FirebaseFirestore.instance.collection('searches').add(<String, dynamic>{
+        'search': text,
+        'date': date,
+        'uid': FirebaseAuth.instance.currentUser!.uid,
+      });
+    }
   }
 
   void deleteMarks(RowFromJson rowFromJson) {
@@ -119,6 +137,24 @@ class ApplicationState extends ChangeNotifier {
     );
 
     print('test.....');
+
+    FirebaseFirestore.instance
+        .collection('searches')
+        .snapshots()
+        .listen((event) {
+      if (FirebaseAuth.instance.currentUser != null) {
+        events = [];
+        for (var doc in event.docs) {
+          if (FirebaseAuth.instance.currentUser!.uid == doc.data()['uid']) {
+            events.add(Event(
+              date: doc.data()['date'].toDate() as DateTime,
+              keyword: doc.data()['search'] as String,
+            ));
+          }
+        }
+      }
+      print('events: ${events}');
+    });
 
     FirebaseFirestore.instance.collection('likes').snapshots().listen((event) {
       if (FirebaseAuth.instance.currentUser != null) {

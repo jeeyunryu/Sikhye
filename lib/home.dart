@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'calendar.dart';
 import 'conditionalSearch.dart';
 import 'detail.dart';
 import 'bookmarks.dart';
@@ -51,6 +52,15 @@ class _HomePageState extends State<HomePage> {
             // backgroundColor: Colors.purple.shade50,
             // leading: const Icon(Icons.menu),
             actions: [
+              IconButton(
+                icon: Icon(Icons.calendar_month),
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const CalendarPage()));
+                },
+              ),
               IconButton(
                 icon: Icon(Icons.person),
                 onPressed: () {

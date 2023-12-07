@@ -30,23 +30,10 @@ class _DetailPageState extends State<DetailPage> {
       ),
       body: ListView(
         children: [
-          Image.asset('assets/default-image.jpg'),
           Padding(
             padding: const EdgeInsets.only(top: 8.0, left: 8.0),
             child: Row(
               children: [
-                Container(
-                  width: 40,
-                  height: 40,
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                      fit: BoxFit.fill,
-                      image: AssetImage('assets/default_brand_logo.png'),
-                    ),
-                  ),
-                ),
-                // Image.asset('assets/default-image.jpg', width: 50, height: 50),
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.only(left: 8.0),
@@ -176,7 +163,7 @@ class _DetailPageState extends State<DetailPage> {
                                           )
                                         ],
                                       );
-                                    }).toList(),
+                                    }),
                                     Row(
                                       children: [
                                         Expanded(

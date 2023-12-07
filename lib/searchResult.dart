@@ -196,8 +196,6 @@ class _ProductsWidgetState extends State<ProductsWidget> {
                               children: [
                                 Row(
                                   children: [
-                                    Image.asset('assets/default-image.jpg',
-                                        height: 100, fit: BoxFit.fitWidth),
                                     Padding(
                                       padding: const EdgeInsets.all(16.0),
                                       child: Container(
