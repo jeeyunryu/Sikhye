@@ -11,10 +11,14 @@ import 'searchResult.dart';
 class Product {
   String productId;
   String folder;
+  String brand;
+  String product;
 
   Product({
     required this.productId,
     required this.folder,
+    required this.brand,
+    required this.product,
   });
 }
 
@@ -56,6 +60,8 @@ class ApplicationState extends ChangeNotifier {
       'folder': foldername,
       'productId': rowFromJson.pRDLSTREPORTNO,
       'uid': FirebaseAuth.instance.currentUser!.uid,
+      'brand': rowFromJson.bSSHNM,
+      'product': rowFromJson.pRDLSTNM,
     });
   }
 
@@ -165,6 +171,8 @@ class ApplicationState extends ChangeNotifier {
             likes.add(Product(
               productId: doc.data()['productId'] as String,
               folder: doc.data()['folder'] as String,
+              brand: doc.data()['brand'] as String,
+              product: doc.data()['product'] as String,
             ));
             if (!folders.contains(doc.data()['folder'])) {
               folders.add(doc.data()['folder'] as String);
@@ -189,8 +197,11 @@ class ApplicationState extends ChangeNotifier {
           for (var doc in event.docs) {
             if (FirebaseAuth.instance.currentUser!.uid == doc.data()['uid']) {
               likes.add(Product(
-                  folder: doc.data()['folder'] as String,
-                  productId: doc.data()['productId'] as String));
+                folder: doc.data()['folder'] as String,
+                productId: doc.data()['productId'] as String,
+                brand: doc.data()['brand'] as String,
+                product: doc.data()['product'] as String,
+              ));
               if (!folders.contains(doc.data()['folder'])) {
                 folders.add(doc.data()['folder'] as String);
               }
